@@ -79,11 +79,11 @@ def format_message(text):
 
 
 def main():
-    rotor_sequence = [2, 0, 3]
+    rotor_sequence = [2, 0, 1]
     # rotor_sequence = [0, 1, 2]
     rotor_ring_key = [0, 0, 0]
-    rotor_ring = ['E', 'W', 'Z']
-    rotor_windows = ['Z', 'I', 'N']
+    rotor_ring = ['W', 'W', 'Z']
+    rotor_windows = ['X', 'Y', 'Z']
     # AT BS DE FM IR KN LZ OW PV HQ
     plugboard_settings = {"A":"T", "B":"S", "D":"E", "F":"M", "I":"R", "K":"N", "L":"Z", "O":"W", "P":"V", "H":"Q"}
 

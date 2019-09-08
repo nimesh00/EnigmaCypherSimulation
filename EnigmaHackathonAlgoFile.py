@@ -91,8 +91,8 @@ def main():
         rotor_ring_key[i] = char_to_int(rotor_ring[i])
     reflector_id = 0
 
-    input_string = "PAZPIAFPWFPBDVECAZZVZWVFTVBPSQRNPHJLYVKFJCEQHIQVXT"
-    input_string2 = "THISXXISXXYQXXTESTXXFELEXXTOXXCHECKXXYOURXXCODEYPX"
+    # input_string = "PAZPIAFPWFPBDVECAZZVZWVFTVBPSQRNPHJLYVKFJCEQHIQVXT"
+    # input_string2 = "THISXXISXXYQXXTESTXXFELEXXTOXXCHECKXXYOURXXCODEYPX"
 
     actual_data_file = open("encrypted.txt", "r")
 

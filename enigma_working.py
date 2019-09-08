@@ -111,12 +111,6 @@ def encrypt_enigma(text, rotor_seq, rotor_ring, rotor_windows, reflector_id, plu
 
     return encrypted_str
 
-def format_message(text):
-    text = text.replace("XX", " ")
-
-    return text
-
-
 def main():
     rotor_sequence = [2, 0, 3]
     # rotor_sequence = [0, 1, 2]
@@ -137,10 +131,6 @@ def main():
     encrypted_text = encrypt_enigma(input_string, rotor_sequence, rotor_ring_key, rotor_windows, reflector_id, plugboard_settings)
 
     print(encrypted_text)
-
-    final_string = format_message(encrypted_text)
-
-    print("Formatted: message: ", final_string)
 
     # rotor_1_output = rotor(rotor_id, input_text, rotor_1_window, rotor_1_ring)
     # print(rotor_1_output)

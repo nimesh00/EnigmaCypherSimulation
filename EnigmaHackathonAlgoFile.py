@@ -19,13 +19,24 @@ def int_to_char(num):
 def encrypt_enigma(text, rotor_seq, rotor_ring, rotor_windows, reflector_id, plugboard_settings):
     encrypted_str = ""
     for char in text:
-
+        last_rotor_windows = rotor_windows[:]
         # rotor rotation
-        rotor_windows[-1] = int_to_char((char_to_int(rotor_windows[-1]) + 1) % 26)
-        for i in range(2, len(rotor_seq) + 1):
-            if rotor_windows[-1 * (i - 1)] == int_to_char((char_to_int(rotor_notches[rotor_seq[-1 * (i - 1)]]) + 1) % 26):
-                rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
+        ''' Odometer Implementation!!!'''
+        # rotor_windows[-1] = int_to_char((char_to_int(rotor_windows[-1]) + 1) % 26)
+        # for i in range(2, len(rotor_seq) + 1):
+        #     if (last_rotor_windows[-1 * (i - 1)] == rotor_notches[rotor_seq[-1 * (i - 1)]]) and (rotor_windows[-1 * (i - 1)] == int_to_char((char_to_int(rotor_notches[rotor_seq[-1 * (i - 1)]]) + 1) % 26)):
+        #         rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
 
+
+        rotor_windows[-1] = int_to_char((char_to_int(rotor_windows[-1]) + 1) % 26)
+        for i in range(1, len(rotor_seq) + 1):
+            if last_rotor_windows[-1 * i] == rotor_notches[rotor_seq[-1 * i]]:
+                if i != 1:
+                    if last_rotor_windows[-1 * i] == rotor_windows[-1 * i]:
+                        rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
+                if i < len(rotor_seq):
+                    if last_rotor_windows[-1 * (i + 1)] == rotor_windows[-1 * (i + 1)]:
+                        rotor_windows[-1 * (i + 1)] = int_to_char((char_to_int(rotor_windows[-1 * (i + 1)]) + 1) % 26)
 
         # input plugboard conversion
         if char in plugboard_settings.keys():
@@ -62,9 +73,9 @@ def encrypt_enigma(text, rotor_seq, rotor_ring, rotor_windows, reflector_id, plu
     return encrypted_str
 
 def format_message(text):
-    text = text.replace("XX", " ")
-    text = text.replace("XNX", ",")
     text = text.replace("XPX", ".")
+    text = text.replace("XNX", ",")
+    text = text.replace("XX", " ")
     text = text.replace("YQ ", "1 ")
     text = text.replace("YW ", "2 ")
     text = text.replace("YE ", "3 ")
@@ -100,14 +111,11 @@ def main():
 
     encrypted_text = encrypt_enigma(actual_string, rotor_sequence, rotor_ring_key, rotor_windows, reflector_id, plugboard_settings)
 
-    # print(encrypted_text)
+    print("Decrypted Text: ", encrypted_text)
 
     final_string = format_message(encrypted_text)
 
-    print("Formatted: message: \n", final_string)
-
-    # rotor_1_output = rotor(rotor_id, input_text, rotor_1_window, rotor_1_ring)
-    # print(rotor_1_output)
+    print("\nFormatted: message: ", final_string)
 
 if __name__ == "__main__":
     main()

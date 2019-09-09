@@ -33,13 +33,26 @@ def int_to_char(num):
 def encrypt_enigma(text, rotor_seq, rotor_ring, rotor_windows, reflector_id, plugboard_settings):
     encrypted_str = ""
     for char in text:
+        last_rotor_windows = rotor_windows[:]
+        # for i in range(2, len(rotor_seq) + 1):
+        #     if rotor_windows[-1 * (i - 1)] == int_to_char((char_to_int(rotor_notches[rotor_seq[-1 * (i - 1)]]) + 1) % 26):
+        #         # print("Got the notch: ", rotor_notches[rotor_seq[-1 * (i - 1)]], "of ", len(rotor_seq) - i)
+        #         rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
+
+        # for i in range(2, len(rotor_seq) + 1):
+        #     if (last_rotor_windows[-1 * (i - 1)] == rotor_notches[rotor_seq[-1 * (i - 1)]]) and (rotor_windows[-1 * (i - 1)] == int_to_char((char_to_int(rotor_notches[rotor_seq[-1 * (i - 1)]]) + 1) % 26)):
+        #         rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
+
         rotor_windows[-1] = int_to_char((char_to_int(rotor_windows[-1]) + 1) % 26)
-        for i in range(2, len(rotor_seq) + 1):
-            if rotor_windows[-1 * (i - 1)] == int_to_char((char_to_int(rotor_notches[rotor_seq[-1 * (i - 1)]]) + 1) % 26):
-                # print("Got the notch: ", rotor_notches[rotor_seq[-1 * (i - 1)]], "of ", len(rotor_seq) - i)
-                rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
+        for i in range(1, len(rotor_seq) + 1):
+            if last_rotor_windows[-1 * i] == rotor_notches[rotor_seq[-1 * i]]:
+                if i != 1:
+                    if last_rotor_windows[-1 * i] == rotor_windows[-1 * i]:
+                        rotor_windows[-1 * i] = int_to_char((char_to_int(rotor_windows[-1 * i]) + 1) % 26)
+                if last_rotor_windows[-1 * (i + 1)] == rotor_windows[-1 * (i + 1)]:
+                    rotor_windows[-1 * (i + 1)] = int_to_char((char_to_int(rotor_windows[-1 * (i + 1)]) + 1) % 26)
 
-
+        print("Last window: ", last_rotor_windows)
         print("Rotor_window: ", rotor_windows)
 
 
@@ -126,7 +139,7 @@ def main():
     reflector_id = 0
 
     input_string = "PAZPIAFPWFPBDVECAZZVZWVFTVBPSQRNPHJLYVKFJCEQHIQVXT"
-    input_string2 = "THISXXISXXYQXXTESTXXFELEXXTOXXCHECKXXYOURXXCODEYPX"
+    input_string2 = "T"
 
     encrypted_text = encrypt_enigma(input_string, rotor_sequence, rotor_ring_key, rotor_windows, reflector_id, plugboard_settings)
 
